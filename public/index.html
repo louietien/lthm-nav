@@ -1,0 +1,283 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Navigation</title>
+  <script>
+    (function () {
+      var t = localStorage.getItem("theme") || "light";
+      document.documentElement.setAttribute("data-theme", t);
+    })();
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* ——— TOKENS ——— */
+    :root {
+      --bg:      #f4efe6;
+      --surface: #fdfaf5;
+      --ink:     #1a1714;
+      --muted:   #7a7067;
+      --faint:   #b0a89e;
+      --line:    rgba(26, 23, 20, 0.11);
+      --accent:  #bf4220;
+      --a-dim:   rgba(191, 66, 32, 0.09);
+      --a-line:  rgba(191, 66, 32, 0.28);
+      --shadow:  0 1px 3px rgba(0,0,0,0.04), 0 6px 18px rgba(0,0,0,0.06);
+      --btn-fg:  #fdfaf5;
+      --radius:  10px;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg:      #110f0c;
+        --surface: #1b1916;
+        --ink:     #ede6db;
+        --muted:   #8a8178;
+        --faint:   #5a544e;
+        --line:    rgba(237, 230, 219, 0.10);
+        --accent:  #e8622a;
+        --a-dim:   rgba(232, 98, 42, 0.12);
+        --a-line:  rgba(232, 98, 42, 0.32);
+        --shadow:  0 1px 3px rgba(0,0,0,0.30), 0 6px 18px rgba(0,0,0,0.30);
+        --btn-fg:  #110f0c;
+      }
+    }
+    html[data-theme="light"] {
+      --bg: #f4efe6; --surface: #fdfaf5; --ink: #1a1714; --muted: #7a7067;
+      --faint: #b0a89e; --line: rgba(26,23,20,.11); --accent: #bf4220;
+      --a-dim: rgba(191,66,32,.09); --a-line: rgba(191,66,32,.28);
+      --shadow: 0 1px 3px rgba(0,0,0,.04), 0 6px 18px rgba(0,0,0,.06);
+      --btn-fg: #fdfaf5;
+    }
+    html[data-theme="dark"] {
+      --bg: #110f0c; --surface: #1b1916; --ink: #ede6db; --muted: #8a8178;
+      --faint: #5a544e; --line: rgba(237,230,219,.10); --accent: #e8622a;
+      --a-dim: rgba(232,98,42,.12); --a-line: rgba(232,98,42,.32);
+      --shadow: 0 1px 3px rgba(0,0,0,.30), 0 6px 18px rgba(0,0,0,.30);
+      --btn-fg: #110f0c;
+    }
+
+    /* ——— BASE ——— */
+    *, *::before, *::after { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: "DM Sans", -apple-system, BlinkMacSystemFont, sans-serif;
+      font-size: 1rem;
+      line-height: 1.6;
+      color: var(--ink);
+      background: var(--bg);
+      transition: background-color 200ms ease, color 200ms ease;
+    }
+
+    /* ——— CARD WRAPPER ——— */
+    .wrap {
+      width: min(520px, 92vw);
+      padding: 2.5rem 0 3rem;
+    }
+
+    /* ——— HEADER ——— */
+    .badge {
+      display: inline-block;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--accent);
+      background: var(--a-dim);
+      border: 1px solid var(--a-line);
+      border-radius: 999px;
+      padding: 0.18em 0.7em;
+      margin-bottom: 0.5rem;
+    }
+    h1 {
+      margin: 0 0 0.25rem;
+      font-size: 1.6rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      color: var(--ink);
+    }
+    .subtitle {
+      margin: 0 0 2rem;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    /* ——— NAV CARDS ——— */
+    .nav-grid {
+      display: grid;
+      gap: 0.75rem;
+    }
+    .nav-card {
+      display: flex;
+      align-items: center;
+      gap: 1.1rem;
+      padding: 1.1rem 1.3rem;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      text-decoration: none;
+      color: inherit;
+      transition: border-color 140ms ease, box-shadow 140ms ease, transform 140ms ease;
+    }
+    .nav-card:hover {
+      border-color: var(--a-line);
+      box-shadow: var(--shadow), 0 0 0 3px var(--a-dim);
+      transform: translateY(-1px);
+    }
+    .nav-card:active {
+      transform: translateY(0);
+    }
+    .card-icon {
+      flex-shrink: 0;
+      width: 2.4rem;
+      height: 2.4rem;
+      border-radius: 8px;
+      background: var(--a-dim);
+      border: 1px solid var(--a-line);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--accent);
+    }
+    .card-icon svg {
+      width: 1.15rem;
+      height: 1.15rem;
+    }
+    .card-text { min-width: 0; }
+    .card-title {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--ink);
+      margin: 0 0 0.05rem;
+    }
+    .card-desc {
+      font-size: 0.82rem;
+      color: var(--muted);
+      margin: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .card-arrow {
+      margin-left: auto;
+      flex-shrink: 0;
+      color: var(--faint);
+      transition: color 140ms ease, transform 140ms ease;
+    }
+    .nav-card:hover .card-arrow {
+      color: var(--accent);
+      transform: translateX(2px);
+    }
+
+    /* ——— FOOTER ——— */
+    .footer {
+      margin-top: 2rem;
+      display: flex;
+      justify-content: flex-end;
+    }
+    .theme-toggle {
+      border: 1px solid var(--line);
+      background: transparent;
+      color: var(--muted);
+      border-radius: 999px;
+      padding: 0.4rem 0.85rem;
+      font: inherit;
+      font-size: 0.82rem;
+      cursor: pointer;
+      transition: color 150ms ease, border-color 150ms ease;
+    }
+    .theme-toggle:hover {
+      color: var(--ink);
+      border-color: var(--a-line);
+    }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <p class="badge">Private</p>
+    <h1>Navigation</h1>
+    <p class="subtitle">Choose where to go.</p>
+
+    <nav class="nav-grid" aria-label="Site navigation">
+
+      <a class="nav-card" href="https://lthm.dk">
+        <span class="card-icon" aria-hidden="true">
+          <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M10 2L3 8v10h5v-5h4v5h5V8z"/>
+          </svg>
+        </span>
+        <span class="card-text">
+          <p class="card-title">Resume</p>
+          <p class="card-desc">lthm.dk</p>
+        </span>
+        <svg class="card-arrow" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M3 8h10M9 4l4 4-4 4"/>
+        </svg>
+      </a>
+
+      <a class="nav-card" href="https://stats.lthm.dk">
+        <span class="card-icon" aria-hidden="true">
+          <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 15l4-5 3 3 3-6 4 3"/>
+            <path d="M3 4v11h14"/>
+          </svg>
+        </span>
+        <span class="card-text">
+          <p class="card-title">Stats</p>
+          <p class="card-desc">stats.lthm.dk — sleep, work &amp; commute</p>
+        </span>
+        <svg class="card-arrow" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M3 8h10M9 4l4 4-4 4"/>
+        </svg>
+      </a>
+
+      <a class="nav-card" href="https://split.lthm.dk">
+        <span class="card-icon" aria-hidden="true">
+          <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="10" cy="10" r="7"/>
+            <path d="M10 6v4l2.5 2.5"/>
+            <path d="M7 10h6"/>
+          </svg>
+        </span>
+        <span class="card-text">
+          <p class="card-title">Expense Splitter</p>
+          <p class="card-desc">split.lthm.dk — monthly shared expenses</p>
+        </span>
+        <svg class="card-arrow" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M3 8h10M9 4l4 4-4 4"/>
+        </svg>
+      </a>
+
+    </nav>
+
+    <div class="footer">
+      <button id="theme-toggle" class="theme-toggle" type="button">Toggle theme</button>
+    </div>
+  </main>
+
+  <script>
+    (function () {
+      var btn = document.getElementById("theme-toggle");
+      function getTheme() {
+        return document.documentElement.getAttribute("data-theme") || "light";
+      }
+      function setTheme(t) {
+        document.documentElement.setAttribute("data-theme", t);
+        localStorage.setItem("theme", t);
+        btn.textContent = t === "dark" ? "Light mode" : "Dark mode";
+      }
+      setTheme(getTheme());
+      btn.addEventListener("click", function () {
+        setTheme(getTheme() === "dark" ? "light" : "dark");
+      });
+    })();
+  </script>
+</body>
+</html>

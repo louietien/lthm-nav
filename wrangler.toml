@@ -1,0 +1,15 @@
+name = "lthm-nav"
+main = "worker.ts"
+compatibility_date = "2025-04-16"
+
+[assets]
+binding = "ASSETS"
+directory = "./public"
+run_worker_first = true
+html_handling = "none"
+
+# Required secrets (set via wrangler secret put):
+#   GITHUB_CLIENT_ID      GitHub OAuth App client ID
+#   GITHUB_CLIENT_SECRET  GitHub OAuth App secret
+#   SESSION_SECRET        random 64-char hex string
+#   ALLOWED_GITHUB_USERS  comma-separated GitHub logins, e.g. "louietien"

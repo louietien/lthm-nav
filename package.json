@@ -1,0 +1,14 @@
+{
+  "name": "lthm-nav",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "deploy": "wrangler deploy"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20260416.2",
+    "typescript": "^5.9.2",
+    "wrangler": "^4.83.0"
+  }
+}
