@@ -20,6 +20,7 @@ export interface Env {
   GITHUB_CLIENT_SECRET: string;
   SESSION_SECRET: string;
   ALLOWED_GITHUB_USERS: string;
+  BASE_URL: string;
   ASSETS: Fetcher;
 }
 
@@ -94,7 +95,7 @@ async function handleGitHubAuth(request: Request, env: Env): Promise<Response> {
   const state = crypto.randomUUID();
   const params = new URLSearchParams({
     client_id: env.GITHUB_CLIENT_ID,
-    redirect_uri: new URL("/auth/github/callback", request.url).toString(),
+    redirect_uri: new URL("/auth/github/callback", env.BASE_URL).toString(),
     scope: "read:user",
     state,
   });
@@ -127,7 +128,7 @@ async function handleGitHubCallback(request: Request, env: Env): Promise<Respons
       client_id: env.GITHUB_CLIENT_ID,
       client_secret: env.GITHUB_CLIENT_SECRET,
       code,
-      redirect_uri: new URL("/auth/github/callback", request.url).toString(),
+      redirect_uri: new URL("/auth/github/callback", env.BASE_URL).toString(),
     }),
   });
 
